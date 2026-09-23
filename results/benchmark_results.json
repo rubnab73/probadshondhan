@@ -1,0 +1,54 @@
+{
+  "human_test": {
+    "Unified Proverb Engine": {
+      "top_1": 0.8,
+      "top_3": 0.8,
+      "top_5": 0.88,
+      "mrr": 0.818,
+      "ndcg_5": 0.8327,
+      "total_queries": 25
+    },
+    "TF-IDF": {
+      "top_1": 0.48,
+      "top_3": 0.64,
+      "top_5": 0.76,
+      "mrr": 0.5813,
+      "ndcg_5": 0.6256,
+      "total_queries": 25
+    },
+    "BanglaBERT": {
+      "top_1": 0.24,
+      "top_3": 0.48,
+      "top_5": 0.6,
+      "mrr": 0.3727,
+      "ndcg_5": 0.4291,
+      "total_queries": 25
+    }
+  },
+  "dev_split": {
+    "Unified Proverb Engine": {
+      "top_1": 0.75,
+      "top_3": 0.9,
+      "top_5": 0.95,
+      "mrr": 0.8292,
+      "ndcg_5": 0.8596,
+      "total_queries": 20
+    },
+    "TF-IDF": {
+      "top_1": 0.5,
+      "top_3": 0.7,
+      "top_5": 0.9,
+      "mrr": 0.6425,
+      "ndcg_5": 0.7057,
+      "total_queries": 20
+    },
+    "BanglaBERT": {
+      "top_1": 0.2,
+      "top_3": 0.3,
+      "top_5": 0.4,
+      "mrr": 0.2725,
+      "ndcg_5": 0.304,
+      "total_queries": 20
+    }
+  }
+}
