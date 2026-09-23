@@ -147,6 +147,8 @@ class BanglaBERTRetriever:
         else:
             proverb_texts = [f"{row['proverb']}: {row['meaning']}" for _, row in self.proverbs_df.iterrows()]
             self.proverb_embeddings = self.encode(proverb_texts) # Shape: (500, 768)
+            proverb_cache = "dataset/cache/banglabert_proverbs.npy"
+            Path(proverb_cache).parent.mkdir(parents=True, exist_ok=True)
             np.save(proverb_cache, self.proverb_embeddings)
 
         # 2. Situation embeddings | Matrix Shape: (1510, 768)
