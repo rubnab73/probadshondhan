@@ -17,6 +17,7 @@ DIMENSIONS OVERVIEW:
 """
 
 from typing import List, Dict, Any, Optional
+from pathlib import Path
 import os
 import numpy as np
 import pandas as pd
@@ -141,6 +142,7 @@ class BanglaBERTRetriever:
             else:
                 proverb_texts = [f"{row['proverb']}: {row['meaning']}" for _, row in self.proverbs_df.iterrows()]
                 self.proverb_embeddings = self.encode(proverb_texts) # Shape: (500, 768)
+                Path(proverb_cache).parent.mkdir(parents=True, exist_ok=True)
                 np.save(proverb_cache, self.proverb_embeddings)
         else:
             proverb_texts = [f"{row['proverb']}: {row['meaning']}" for _, row in self.proverbs_df.iterrows()]

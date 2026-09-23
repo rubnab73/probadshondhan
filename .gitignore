@@ -25,9 +25,6 @@ wheels/
 *.egg
 
 # PyTorch / Cache files
-dataset/cache/*.pt
-dataset/cache/*.json
-dataset/cache/*.npy
 dataset/cache/
 
 # ==========================================
