@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বাংলা প্রবাদ অনুসন্ধান — Bangla Situation to Proverb Semantic Retrieval</title>
+    <meta name="description"
+        content="বাস্তব ঘটনা ও পরিস্থিতির বিবরণ বিশ্লেষণ করে সবচেয়ে প্রাসঙ্গিক বাংলা প্রবাদ খুঁজে বের করার অত্যাধুনিক শব্দার্থিক অনুসন্ধান ব্যবস্থা।">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-icon"></span>
+                <div class="brand-text">
+                    <span class="brand-title">প্রবাদসন্ধান</span>
+                    <span class="brand-subtitle">Bangla Situation-to-Proverb AI</span>
+                </div>
+            </div>
+
+            <nav class="nav-tabs" role="tablist">
+                <button class="tab-btn active" data-tab="tab-search" id="btn-tab-search">
+                    <span class="tab-icon">🔍</span> প্রবাদ অনুসন্ধান
+                </button>
+                <button class="tab-btn" data-tab="tab-database" id="btn-tab-database">
+                    <span class="tab-icon">📚</span> প্রবাদ ভাণ্ডার (<span id="nav-proverbs-count">৫০০</span>)
+                </button>
+                <button class="tab-btn" data-tab="tab-benchmark" id="btn-tab-benchmark">
+                    <span class="tab-icon">📊</span> বেঞ্চমার্ক ও মূল্যায়ন
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+        <!-- TAB 1: Search & Retrieval -->
+        <section id="tab-search" class="tab-content active">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="badge-pill">
+                    <span class="badge-dot"></span> <span id="hero-training-badge">BanglaBERT Neural & TF-IDF Ensemble
+                        Engine • ১,৫১০+ পরিস্থিতি প্রশিক্ষিত</span>
+                </div>
+                <h1 class="hero-title">বাস্তব পরিস্থিতি থেকে ভাবার্থভিত্তিক বাংলা প্রবাদ খুঁজুন</h1>
+                <p class="hero-description">
+                    যেকোনো ঘটনা, গল্প বা বাস্তব জীবনের পরিস্থিতি বাংলায় লিখুন। আধুনিক নিউরাল ল্যাঙ্গুয়েজ মডেল ও
+                    শব্দার্থিক ভেক্টর বিশ্লেষণের মাধ্যমে নিমিষেই খুঁজে নিন সবচেয়ে প্রাসঙ্গিক ও মানানসই বাংলা প্রবাদ।
+                </p>
+            </div>
+
+            <!-- Query Input Card -->
+            <div class="glass-card query-card">
+                <div class="card-header">
+                    <label for="situation-input" class="input-label">
+                        <span class="icon">✍️</span> বাংলায় ঘটনা বা পরিস্থিতির বিবরণ দিন:
+                    </label>
+                    <span class="helper-text">কীবোর্ড শর্টকাট: Ctrl + Enter চেপে সরাসরি সার্চ করুন</span>
+                </div>
+
+                <div class="textarea-wrapper">
+                    <textarea id="situation-input" rows="4"
+                        placeholder="যেমন: অতিরিক্ত লাভের মোহে পড়ে সে নিজের সব সঞ্চয় ও পৈতৃক ভিটা বিক্রি করে একটি সন্দেহজনক ব্যবসায় টাকা খাটাল। কিছুদিন পর প্রতিষ্ঠানটি উধাও হয়ে গেল এবং সে সম্পূর্ণ নিঃস্ব হলো..."></textarea>
+                </div>
+
+                <!-- Sample Prompts -->
+                <div class="samples-container">
+                    <div class="samples-header">
+                        <span class="samples-title">⚡ দ্রুত পরীক্ষার জন্য বাস্তব নমুনা পরিস্থিতি:</span>
+                        <span class="samples-sub">ক্লিক করলেই ইনপুট বক্সে যুক্ত হবে</span>
+                    </div>
+                    <div class="sample-chips" id="sample-chips-container">
+                        <!-- Loaded dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- Model Selector & Controls -->
+                <div class="controls-row">
+                    <div class="model-select-group">
+                        <span class="control-label">অনুসন্ধান মডেল নির্বাচন:</span>
+                        <div class="pill-buttons">
+                            <button class="pill-btn active" data-model="unified" id="model-unified"
+                                title="BanglaBERT Neural + TF-IDF Lexical Ensemble (সর্বোচ্চ নির্ভুল ও নির্ভরযোগ্য)">
+                                <span class="pill-star">★</span> সার্বিক সেরা ইঞ্জিন (Unified Hybrid)
+                            </button>
+                            <button class="pill-btn" data-model="banglabert" id="model-banglabert"
+                                title="বুয়েটের প্রি-ট্রেইন্ড বাংলাবার্ট ডিপ নিউরাল কনটেক্সচুয়াল মডেল">
+                                🧠 বাংলাবার্ট (BanglaBERT)
+                            </button>
+                            <button class="pill-btn" data-model="tfidf" id="model-tfidf"
+                                title="দ্রুততম আধুনিক টিএফ-আইডিএফ লেক্সিক্যাল সার্চ">
+                                ⚡ টিএফ-আইডিএফ (TF-IDF)
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="submit-btn" id="btn-find-proverb">
+                        <span class="btn-text">প্রবাদ অনুসন্ধান করুন</span>
+                        <span class="btn-icon">⚡</span>
+                        <span class="spinner" id="search-spinner"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-container" id="results-container" style="display: none;">
+                <div class="results-header">
+                    <div class="results-title-group">
+                        <h2 class="results-title">
+                            <span class="icon">🎯</span> সবচেয়ে প্রাসঙ্গিক প্রবাদসমূহ
+                        </h2>
+                        <span class="results-sub">পরিস্থিতির অন্তর্নিহিত ভাবার্থের ওপর ভিত্তি করে সাজানো</span>
+                    </div>
+                    <div class="results-meta" id="results-meta">
+                        ব্যবহৃত মডেল: <span class="meta-highlight" id="active-model-name">Unified Proverb Engine</span>
+                    </div>
+                </div>
+
+                <div class="results-grid" id="results-cards">
+                    <!-- Dynamic Result Cards injected via app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: Proverb Database Explorer -->
+        <section id="tab-database" class="tab-content">
+            <div class="section-intro">
+                <div class="badge-pill">কোর নলেজবেস</div>
+                <h2>📚 সমৃদ্ধ বাংলা প্রবাদ জ্ঞানভাণ্ডার</h2>
+                <p>আমাদের ডেটাসেটে সংরক্ষিত ৫০০টি নির্বাচিত কালজয়ী বাংলা প্রবাদ ও তাদের গভীর দার্শনিক ভাবার্থ।</p>
+            </div>
+
+            <div class="database-filters glass-card">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="db-search-input"
+                        placeholder="প্রবাদ বা অন্তর্নিহিত অর্থ দিয়ে অনুসন্ধান করুন...">
+                </div>
+                <div class="db-stats" id="db-count-badge">
+                    মোট ৫০০টি প্রবাদ সংরক্ষিত
+                </div>
+            </div>
+
+            <div class="table-container glass-card">
+                <table class="proverbs-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">আইডি</th>
+                            <th style="width: 35%;">বাংলা প্রবাদ</th>
+                            <th style="width: 45%;">অন্তর্নিহিত অর্থ ও তাৎপর্য</th>
+                            <th style="width: 100px; text-align: center;">অ্যাকশন</th>
+                        </tr>
+                    </thead>
+                    <tbody id="db-table-body">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TAB 3: Evaluation Benchmark -->
+        <section id="tab-benchmark" class="tab-content">
+            <div class="section-intro">
+                <div class="badge-pill">গবেষণা ও পরীক্ষণ</div>
+                <h2>📊 মডেল মূল্যায়ন ও বেঞ্চমার্ক ফলাফল</h2>
+                <p>হিউম্যান গোল্ড টেস্ট ও ডেভ ডেটাসেটে বিভিন্ন সার্চ অ্যালগরিদমের তুলনামূলক কার্যক্ষমতা ও নির্ভুলতার
+                    পরিসংখ্যান।</p>
+            </div>
+
+            <!-- Top Metric Highlights -->
+            <div class="benchmark-grid">
+                <div class="metric-card glass-card highlight-card">
+                    <div class="metric-badge">Dev Split</div>
+                    <div class="metric-icon">🚀</div>
+                    <div class="metric-value" id="bm-top5-dev">90.0%</div>
+                    <div class="metric-label">Unified Top-5 নির্ভুলতা</div>
+                    <div class="metric-sub">শীর্ষ ৫ প্রবাদের ভেতর ৯0% ক্ষেত্রে সঠিক প্রবাদ উদ্ধার</div>
+                </div>
+                <div class="metric-card glass-card">
+                    <div class="metric-badge">Dev Split</div>
+                    <div class="metric-icon">🥇</div>
+                    <div class="metric-value" id="bm-top1-dev">70.0%</div>
+                    <div class="metric-label">Unified Top-1 নির্ভুলতা</div>
+                    <div class="metric-sub">১ম অবস্থানেই সরাসরি নিখুঁত ম্যাচ</div>
+                </div>
+                <div class="metric-card glass-card">
+                    <div class="metric-badge">Human Test</div>
+                    <div class="metric-icon">🎯</div>
+                    <div class="metric-value" id="bm-top5-human">88.0%</div>
+                    <div class="metric-label">Human Gold Top-5 কভারেজ</div>
+                    <div class="metric-sub">বাস্তব মানুষের লেখা জটিল বর্ণনায় ৮৮% সঠিকতা</div>
+                </div>
+                <div class="metric-card glass-card">
+                    <div class="metric-badge">Corpus Scale</div>
+                    <div class="metric-icon">📚</div>
+                    <div class="metric-value" id="bm-corpus-count">১,৫১০+</div>
+                    <div class="metric-label">প্রশিক্ষণ পরিস্থিতি (Situations)</div>
+                    <div class="metric-sub">৫০০ প্রবাদের প্রতিটির বাস্তব জীবনের সমৃদ্ধ দৃষ্টান্ত</div>
+                </div>
+            </div>
+
+            <!-- Human Test Comparison Table -->
+            <div class="benchmark-table-wrapper glass-card">
+                <div class="card-header table-card-header">
+                    <div>
+                        <h3>🥇 হিউম্যান টেস্ট সেট মূল্যায়ন (Human-written Test Split)</h3>
+                        <p class="card-subtitle">স্বতন্ত্র গবেষকদের দ্বারা রচিত ২৫টি বাস্তব জীবনের বর্ণনায় মডেলের অন্ধ
+                            পরীক্ষণ</p>
+                    </div>
+                    <span class="badge gold-badge">গোল্ড স্ট্যান্ডার্ড টেস্ট</span>
+                </div>
+                <div class="table-container">
+                    <table class="benchmark-table">
+                        <thead>
+                            <tr>
+                                <th>অনুসন্ধান পদ্ধতি (Method)</th>
+                                <th>Top-1 Accuracy</th>
+                                <th>Top-3 Accuracy</th>
+                                <th>Top-5 Accuracy</th>
+                                <th>MRR (র‌্যাংকিং মান)</th>
+                                <th>nDCG@5</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmark-human-body">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Dev Split Comparison Table -->
+            <div class="benchmark-table-wrapper glass-card" style="margin-top: 2rem;">
+                <div class="card-header table-card-header">
+                    <div>
+                        <h3>🥈 ডেভ স্প্লিট মূল্যায়ন (Development Test Split)</h3>
+                        <p class="card-subtitle">২০টি বৈচিত্র্যময় পরিস্থিতি ও রূপক বর্ণনার ওপর মডেলের মূল্যায়ন</p>
+                    </div>
+                    <span class="badge blue-badge">ডেভেলপমেন্ট স্প্লিট</span>
+                </div>
+                <div class="table-container">
+                    <table class="benchmark-table">
+                        <thead>
+                            <tr>
+                                <th>অনুসন্ধান পদ্ধতি (Method)</th>
+                                <th>Top-1 Accuracy</th>
+                                <th>Top-3 Accuracy</th>
+                                <th>Top-5 Accuracy</th>
+                                <th>MRR (র‌্যাংকিং মান)</th>
+                                <th>nDCG@5</th>
+                            </tr>
+                        </thead>
+                        <tbody id="benchmark-dev-body">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Technical Architecture Card -->
+            <div class="architecture-card glass-card">
+                <div class="card-header">
+                    <h3>💡 প্রযুক্তি ও অ্যালগরিদম কাঠামো (How it Works)</h3>
+                </div>
+                <div class="arch-content">
+                    <div class="arch-col">
+                        <h4>১. ডুয়াল-লেয়ার সিচুয়েশন অগমেন্টেশন</h4>
+                        <p>শুধুমাত্র প্রবাদের সংক্ষিপ্ত অর্থ নয়, বাস্তব প্রশিক্ষণ পরিস্থিতির ভেক্টর
+                            প্রতিনিধিত্বকে প্রবাদের সাথে সংযুক্ত করে শব্দার্থিক ব্যবধান (Semantic Gap) দূর করা হয়েছে।
+                        </p>
+                    </div>
+                    <div class="arch-col">
+                        <h4>২. বুয়েট বাংলাবার্ট (BanglaBERT)</h4>
+                        <p>বাংলা ভাষার সমৃদ্ধ রূপক, বাগধারা ও জটিল ব্যাকরণগত ভাবার্থ অনুধাবনের জন্য প্রি-ট্রেইন্ড
+                            BanglaBERT ট্র্যান্সফরমার ব্যবহার করা হয়েছে।</p>
+                    </div>
+                    <div class="arch-col">
+                        <h4>৩. ডুয়াল হাইব্রিড ব্লেন্ডিং (Unified Engine)</h4>
+                        <p>টিএফ-আইডিএফ (TF-IDF লেক্সিক্যাল মিল) এবং বাংলাবার্ট নিউরাল ভেক্টরের গভীর ভাবার্থ অনুধাবনের
+                            যৌক্তিক সমন্বয়ে সিস্টেমটি সর্বোচ্চ নির্ভুলতা অর্জন করে।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="footer-title">বাংলা প্রবাদ শব্দার্থিক অনুসন্ধান ব্যবস্থা • Bangla Situation-to-Proverb Semantic
+                Retrieval</p>
+            <p class="footer-sub">প্রযুক্তি: BanglaBERT Transformer, TF-IDF Lexical Engine & Flask</p>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
